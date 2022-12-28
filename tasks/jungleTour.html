@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jungle Tour</title>
+    <link rel="stylesheet" href="../common.css">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        .drumkit {
+            width: 100%;
+            height: 100vh;
+            background-image: url('../images/jungle.jpg');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
+        }
+        .key {
+            border: 2px solid white;
+            width: 80px;
+            vertical-align: middle;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: large;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: all 0.8s;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .key kbd {
+            margin-bottom: 4px;
+        }
+        .playing {
+            border-color: brown;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px brown;
+        }
+    </style>
+</head>
+<body>
+    <div class="drumkit">
+        <div data-key="66" class="key">
+            <kbd>Press B</kbd>
+            <span>Bird</span>
+        </div>
+        <div data-key="67" class="key">
+            <kbd>Press C</kbd>
+            <span>Cat</span>
+        </div>
+        <div data-key="68" class="key">
+            <kbd>Press D</kbd>
+            <span>Dog</span>
+        </div>
+        <div data-key="76" class="key">
+            <kbd>Press L</kbd>
+            <span>Lion</span>
+        </div>
+    </div>
+    <div class="audio">
+        <audio data-key="66" src="../sounds/bird.wav"></audio>
+        <audio data-key="67" src="../sounds/cat.wav"></audio>
+        <audio data-key="68" src="../sounds/dog.wav"></audio>
+        <audio data-key="76" src="../sounds/lion.wav"></audio>
+    </div>
+
+    <script>
+        function playsound(e) {
+            let keyCode = null;
+            if( typeof e == 'object') {
+                keyCode = e.keyCode;
+            } else {
+                keyCode = parseInt(e);
+            }
+            const sound = document.querySelector(`audio[data-key="${keyCode}"]`);
+            if(sound) {
+                sound.currentTime = 0;
+                sound.play();
+                const key = document.querySelector(`.key[data-key="${keyCode}"]`);
+                key.classList.add('playing');
+
+                // Remove playing class on audio ended
+                sound.addEventListener('ended', () => {
+                  key.classList.remove('playing');
+                })
+            }
+        }
+        window.addEventListener('keydown', playsound);
+
+        // Onclick event
+        const keys = document.querySelectorAll('.key');
+        keys.forEach(key => key.addEventListener('click', function() {
+            playsound(this.getAttribute('data-key'))
+        }));
+
+        // Remove playing class on transitionEnd
+        // const keys = document.querySelectorAll('.key');
+        // keys.forEach(key => key.addEventListener('transitionend', function(e) {
+        //     if(e.propertyName !== 'transform') return;
+        //     this.classList.remove('playing');
+        // }))
+
+    </script>
+</body>
+</html>
