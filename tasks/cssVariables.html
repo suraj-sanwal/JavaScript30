@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../common.css">
+    <title>CSS Variables</title>
+    <style>
+        :root {
+            --spacing: 10px;
+            --width: 400px;
+            --color: #ffaacc; 
+        }
+        .container {
+            background-color: aquamarine;
+            width: calc(100% - 100px);
+            height: 100vh;
+            padding: 50px;
+        }
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 40px 0 20px;
+        }
+        .field-group {
+            margin-bottom: 20px;
+        }
+        .field-group label {
+            font-size: larger;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .field-group input:focus {
+            outline: none;
+        }
+        .output-box {
+            width: var(--width);
+            height: auto;
+            background-color: var(--color);
+            padding: var(--spacing);
+        }
+        .output-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spacing field-group">
+            <label for="spacing">Spacing:</label>
+            <input type="range" name="spacing" id="spacing" value="10" min="10" max="100" data-unit="px">
+        </div>
+
+        
+        <div class="width field-group">
+            <label for="width">Width:</label>
+            <input type="range" name="width" id="width" value="400" min="400" max="800" data-unit="px">
+        </div>
+
+        <div class="color field-group">
+            <label for="color">Color:</label>
+            <input type="color" name="color" id="color" value="#ffaacc">
+        </div>
+
+        <h2 class="title">All the changes in above fields will reflect here.</h2>
+        <div class="output-box">
+            <img src="../images/drumkit-bg.png">
+        </div>
+    </div>
+
+    <script src="../scripts/cssVariables.js"></script>
+</body>
+</html>
